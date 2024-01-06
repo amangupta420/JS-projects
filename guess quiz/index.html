@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the quiz - Win exiciting rewards</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            margin-top: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            /* background-color: green; */
+            width: 50%;
+            height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            background-color: white;
+            color: black;
+            border-radius: 35px;
+            box-shadow: 1px 1px 20px white;
+            width: 80%;
+            height: 85%;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
+
+        #allButtons {
+            margin-top: 50px;
+        }
+
+        #valueBtn {
+            border: 2px solid black;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 25px;
+            margin: 25px;
+        }
+
+        #guessTag {
+            display: none;
+        }
+
+        #guessNumber {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            font-size: 80px;
+            text-align: center;
+            outline: none;
+            border: 2px solid black;
+            display: none;
+            margin: 30px 0px;
+        }
+
+        #exampleNumberBox {
+            display: none;
+        }
+
+        #example {
+            border: 2px solid black;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 15px;
+            margin: 5px;
+        }
+
+        .notified {
+            margin-top: 100px;
+        }
+
+        #submitQuiz {
+            background-color: rgb(30, 30, 250);
+            border: 2px solid black;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 35px;
+            color: white;
+            display: none;
+            margin-top: 40px;
+        }
+
+        #tryAgain {
+            display: none;
+            background-color: red;
+            padding: 10px 25px;
+            border-radius: 35px;
+            border: 2px solid black;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>Guess the number</h1>
+            <h3 id="chooseNumber">Choose a number:</h3>
+            <div id="allButtons">
+                <input id="valueBtn" type="button" value="10">
+                <input id="valueBtn" type="button" value="20">
+                <input id="valueBtn" type="button" value="30">
+                <input id="valueBtn" type="button" value="40">
+                <input id="valueBtn" type="button" value="50"><br>
+                <input id="valueBtn" type="button" value="60">
+                <input id="valueBtn" type="button" value="70">
+                <input id="valueBtn" type="button" value="80">
+                <input id="valueBtn" type="button" value="90">
+                <input id="valueBtn" type="button" value="100">
+            </div>
+            <div id="playBox">
+                <h3 id="guessTag"></h3>
+                <input id="guessNumber" type="text" placeholder="?">
+                <div id="exampleNumberBox">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                    <input type="button" id="example" value="">
+                </div>
+                <div id="notify"></div>
+                <h1 id="winNotify"></h1>
+                <button id="submitQuiz">Submit</button>
+            </div>
+            <h1 id="overNotify"></h1>
+            <button id="tryAgain">Try again</button>
+        </div>
+    </div>
+    <script>
+        const chooseNumber = document.getElementById("chooseNumber");
+        const allButtons = document.getElementById("allButtons");
+        const valueBtn = document.querySelectorAll("valueBtn");
+        const guessTag = document.getElementById("guessTag");
+        const guessNumber = document.getElementById("guessNumber");
+        const submitQuiz = document.getElementById("submitQuiz");
+        const notify = document.getElementById("notify");
+        const winNotify = document.getElementById("winNotify");
+        const example = document.querySelectorAll("#example");
+        const exampleNumberBox = document.getElementById("exampleNumberBox");
+        const overNotify = document.getElementById("overNotify");
+        const tryAgain = document.getElementById("tryAgain");
+        const playBox = document.getElementById("playBox");
+
+        let choosedNumber;
+        let randomNumber = 0;
+        let wrongGuess = 0;
+        let rightGuess = 0;
+
+        const takeInput = () => {
+            allButtons.addEventListener('click', (e) => {
+                choosedNumber = e.target.value;
+                randomNumber = parseInt(Math.random() * choosedNumber);
+                chooseNumber.style.display = 'none';
+                allButtons.style.display = 'none';
+                guessTag.style.display = 'block';
+                guessNumber.style.display = 'inline-block';
+                submitQuiz.style.display = 'inline-block';
+                guessTag.innerText = `Your number is ${choosedNumber}. Now guess a number under ${choosedNumber}`;
+                guessNumber.value = '';
+                exampleNumbers();
+            });
+        }
+        takeInput();
+
+        const submitGuessNumber = () => {
+            let finalNumber = parseInt(guessNumber.value);
+            // console.log(finalNumber);
+            if (finalNumber === randomNumber) {
+                rightGuess++;
+                winNotify.innerText = `Yes! You choosed correct number.
+                you choosed ${rightGuess} times right.
+                and ${wrongGuess} times wrong.`;
+                exampleNumberBox.innerText = '';
+                winNotify.style.marginTop = '100px'
+                guessNumber.style.display = 'none';
+                guessNumber.style.display = 'none';
+                notify.style.display = 'none';
+                submitQuiz.style.display = 'none';
+                guessTag.style.display = 'none';
+            } else if (finalNumber < randomNumber) {
+                notify.innerText = `Your number is smaller than guess number.`
+                wrongGuess++;
+            } else {
+                notify.innerText = 'Your number is greater than guess number.'
+                wrongGuess++;
+            }
+        }
+
+        submitQuiz.addEventListener('click', () => {
+            submitGuessNumber();
+            guessNumber.value = '';
+        })
+        guessNumber.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                submitGuessNumber();
+                guessNumber.value = '';
+            }
+        })
+        const exampleNumbers = () => {
+            exampleNumberBox.style.display = 'block'
+            let randomExamples = choosedNumber;
+            example[0].value = parseInt(Math.random() * randomExamples);
+            example[1].value = parseInt(Math.random() * randomExamples);
+            example[2].value = parseInt(Math.random() * randomExamples);
+            example[3].value = parseInt(Math.random() * randomExamples);
+            example[4].value = parseInt(Math.random() * randomExamples);
+            example[5].value = parseInt(Math.random() * randomExamples);
+            example[6].value = parseInt(Math.random() * randomExamples);
+            example[7].value = parseInt(Math.random() * randomExamples);
+            example[8].value = parseInt(Math.random() * randomExamples);
+            example[9].value = parseInt(Math.random() * randomExamples);
+        };
+        exampleNumberBox.addEventListener('click', (e) => {
+            let value = parseInt(e.target.value);
+            if (value === randomNumber) {
+                rightGuess++;
+                winNotify.innerText = `Yes! You choosed correct number.
+                you choosed ${rightGuess} times right.
+                and ${wrongGuess} times wrong.`;
+                exampleNumberBox.innerText = '';
+                winNotify.style.marginTop = '100px'
+                guessNumber.style.display = 'none';
+                guessNumber.style.display = 'none';
+                notify.style.display = 'none';
+                submitQuiz.style.display = 'none';
+                guessTag.style.display = 'none';
+                gameOver();
+            } else if (value < randomNumber) {
+                notify.innerText = `Your number is smaller than guess number.`
+                wrongGuess++;
+                gameOver();
+            } else {
+                notify.innerText = 'Your number is greater than guess number.'
+                wrongGuess++;
+                gameOver();
+            }
+
+        });
+        const gameOver = () => {
+            if (rightGuess + wrongGuess == 10) {
+                console.log("Game is over");
+                playBox.style.display = 'none';
+                overNotify.innerText = `Your chances up`
+                overNotify.style.marginTop = '100px'
+                tryAgain.style.display = 'inline-block'
+                tryAgain.style.marginTop = '100px'
+            };
+        }
+        tryAgain.addEventListener('click', () => {
+            takeInput();
+            console.log('aman');
+        })
+    </script>
+</body>
+
+</html>

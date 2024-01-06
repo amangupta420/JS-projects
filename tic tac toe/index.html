@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            background-color: rgb(221, 217, 217);
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            margin-top: 50px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 800px;
+            height: 100%;
+            border: 2px solid black;
+            border-radius: 20px;
+        }
+
+        #notify {
+            color: white;
+            height: 50px;
+            border-radius: 20px;
+            font-weight: bold;
+            padding: 10px;
+            font-size: 30px;
+            margin: 30px 0px;
+        }
+
+        .items {
+            width: 500px;
+            height: 500px;
+            border-radius: 19px;
+            display: grid;
+            grid-template-columns: 100fr 100fr 100fr;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box:active {
+            background-color: rgb(221, 217, 217);
+        }
+
+        .box {
+            background-color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 99%;
+            height: 99%;
+            border-radius: 19px;
+            border: 0px solid transparent;
+            font-size: 30px;
+        }
+
+        #restartBtn {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-size: 20px;
+            margin: 50px 0px;
+        }
+
+        #restartBtn:active {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="notify">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</div>
+        <div class="items">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+            <input class="box" type="button" value="">
+        </div>
+        <button id="restartBtn">Restart</button>
+    </div>
+    <script>
+        const box = document.getElementsByClassName("box");
+        const boxArray = Array.from(box);
+        const restartBtn = document.getElementById("restartBtn");
+        const notify = document.getElementById("notify");
+        let playerX = true;
+
+        boxArray.forEach(box => {
+            let boxClick = box.addEventListener("click", (button) => {
+                if (playerX === true) {
+                    if (button.target.value == '') {
+                        button.target.value = 'o';
+                        playerX = false;
+                    }
+                } else {
+                    if (button.target.value == '') {
+                        button.target.value = 'x';
+                        playerX = true;
+                    }
+                }
+                checkAnswer();
+                checkMatchDraw();
+            })
+        });
+
+        // Check the answer.
+        const checkAnswer = () => {
+            let value0 = box[0].value;
+            let value1 = box[1].value;
+            let value2 = box[2].value;
+            let value3 = box[3].value;
+            let value4 = box[4].value;
+            let value5 = box[5].value;
+            let value6 = box[6].value;
+            let value7 = box[7].value;
+            let value8 = box[8].value;
+            const array = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [6, 4, 2], [0, 4, 8]];
+
+            // Check Winner for x.
+            if (value0 === 'x' && value1 === 'x' && value2 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value3 === 'x' && value4 === 'x' && value5 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value6 === 'x' && value7 === 'x' && value8 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value0 === 'x' && value3 === 'x' && value6 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value1 === 'x' && value4 === 'x' && value7 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value2 === 'x' && value5 === 'x' && value8 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value6 === 'x' && value4 === 'x' && value2 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+            } else if (value0 === 'x' && value4 === 'x' && value8 === 'x') {
+                notify.innerText = 'Congratulations x you win.'
+                x = 'x is winner';
+            }
+
+            // Check winner for o.
+            if (value0 === 'o' && value1 === 'o' && value2 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value3 === 'o' && value4 === 'o' && value5 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value6 === 'o' && value7 === 'o' && value8 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value0 === 'o' && value3 === 'o' && value6 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value1 === 'o' && value4 === 'o' && value7 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value2 === 'o' && value5 === 'o' && value8 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value6 === 'o' && value4 === 'o' && value2 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+            } else if (value0 === 'o' && value4 === 'o' && value8 === 'o') {
+                notify.innerText = 'Congratulations o you win.'
+                o = 'x is winner';
+            }
+        }
+
+        // Check match draw.
+        const checkMatchDraw = () => {
+            if (boxArray[0].value !== '' && boxArray[1].value !== '' && boxArray[2].value !== '' && boxArray[3].value !== '' && boxArray[4].value !== '' && boxArray[5].value !== '' && boxArray[6].value !== '' && boxArray[7].value !== '' && boxArray[8].value !== '') {
+                if (notify.innerText === '') {
+                    notify.innerText = 'Match draw.'
+                }
+            }
+        }
+        // restart the game.
+        restartBtn.addEventListener('click', () => {
+            Array.from(box).forEach(box => {
+                box.value = '';
+                playerX = true;
+                notify.innerText = '';
+            })
+        })
+    </script>
+</body>
+
+</html>
