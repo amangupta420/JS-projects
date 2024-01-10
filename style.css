@@ -16,7 +16,7 @@ body {
     align-items: center;
     justify-content: center;
     /* border: 1.5vw solid black; */
-/* }
+}
 
 .box {
     width: 80vw;
@@ -51,7 +51,7 @@ body {
     flex-direction: column;
     justify-content: center;
     background-color: black;
-} */
+}
 
 .items-box {
     display: grid;
