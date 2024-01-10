@@ -16,7 +16,7 @@ body {
     align-items: center;
     justify-content: center;
     /* border: 1.5vw solid black; */
-}
+/* }
 
 .box {
     width: 80vw;
@@ -51,7 +51,7 @@ body {
     flex-direction: column;
     justify-content: center;
     background-color: black;
-}
+} */
 
 .items-box {
     display: grid;
@@ -109,7 +109,7 @@ body {
         color: black;
     }
 
-    /* .box {
+    .box {
         width: 90vw;
         height: 85vh;
         text-align: center;
@@ -149,10 +149,19 @@ body {
 
     .stand {
         display: none;
-    } */
+    }
 
     .box-main-items-container {
         height: 97%;
         border-radius: 3.5vw;
     }
+
+    .box-main-items-container {}
+
+    .input {}
+
+    #inputBox {}
+
+    .calculatorBox {}
+
 }
