@@ -109,7 +109,7 @@ body {
         color: black;
     }
 
-    .box {
+    /* .box {
         width: 90vw;
         height: 85vh;
         text-align: center;
@@ -149,7 +149,7 @@ body {
 
     .stand {
         display: none;
-    }
+    } */
 
     .box-main-items-container {
         height: 97%;
