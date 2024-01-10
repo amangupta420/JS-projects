@@ -15,7 +15,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1.5vw solid black; */
+    border: 1.5vw solid black;
 }
 
 .box {
