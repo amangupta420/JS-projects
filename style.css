@@ -19,8 +19,8 @@ body {
 }
 
 .box {
-    width: 60vw;
-    height: 30vw;
+    width: 80vw;
+    height: 35vw;
     margin: 0px;
     padding: 0px;
     /* background: radial-gradient(red, yellow); */
@@ -59,26 +59,43 @@ body {
 }
 
 .box-main-items-container {
-    /* background-color: red; */
     width: 100%;
     height: 100%;
     border-radius: 0.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.input {
+    border: 2px solid red;
+    width: 97%;
+    position: sticky;
+    top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #inputBox {
-    width: 205px;
-    padding: 10px;
-    padding-top: 70px;
-    text-align: right;
-    font-size: 20px;
-    outline: none;
-    color: black;
-    margin-bottom: 4px;
+    font-size: 3vw;
+    width: 99%;
+    padding-top: 10vh;
+}
+
+.calculatorBox {
+    /* background-color: red; */
+    display: grid;
+    width: 97%;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 100fr 100fr 100fr 100fr;
 }
 
 .btn {
-    width: 54px;
-    height: 54px;
+    width: 100%;
+    height: 10vh;
 }
 
 /* Media quiry */
@@ -138,4 +155,13 @@ body {
         height: 97%;
         border-radius: 3.5vw;
     }
+
+    .box-main-items-container {}
+
+    .input {}
+
+    #inputBox {}
+
+    .calculatorBox {}
+
 }

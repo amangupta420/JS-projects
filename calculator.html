@@ -1,101 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>calculator</title>
-    <style>
-        body {
-            margin: 0px;
-            padding: 0px;
-            background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100vh;
-        }
-
-        #inputBox {
-            width: 205px;
-            padding: 10px;
-            padding-top: 70px;
-            text-align: right;
-            font-size: 20px;
-            outline: none;
-            color: black;
-            margin-bottom: 4px;
-        }
-
-        .btn {
-            width: 54px;
-            height: 54px;
-        }
-    </style>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<style>
+
+</style>
 
 <body>
     <div class="container">
-        <div class="calculatorBox">
-            <input id="inputBox" type="text">
-            <div class="graph1">
-                <input class="btn" type="button" value="AC">
-                <input class="btn" type="button" value="DEL">
-                <input class="btn" type="button" value="/">
-                <input class="btn" type="button" value="%">
+        <div class="box">
+            <div class="top-items">
+                <div class="for-items">aa<span class="first-span"></span>aaaaa<span class="second-span"></span>aaa</div>
             </div>
-            <div class="graph2">
-                <input class="btn" type="button" value="1">
-                <input class="btn" type="button" value="2">
-                <input class="btn" type="button" value="3">
-                <input class="btn" type="button" value="+">
-            </div>
-            <div class="graph3">
-                <input class="btn" type="button" value="4">
-                <input class="btn" type="button" value="5">
-                <input class="btn" type="button" value="6">
-                <input class="btn" type="button" value="-">
-            </div>
-            <div class="graph4">
-                <input class="btn" type="button" value="7">
-                <input class="btn" type="button" value="8">
-                <input class="btn" type="button" value="9">
-                <input class="btn" type="button" value="=">
+            <div class="box-main-items-container">
+                <div class="input">
+                    <input id="inputBox" type="text">
+                </div>
+                <div class="calculatorBox">
+                    <input class="btn" type="button" value="AC">
+                    <input class="btn" type="button" value="DEL">
+                    <input class="btn" type="button" value="/">
+                    <input class="btn" type="button" value="%">
+                    <input class="btn" type="button" value="1">
+                    <input class="btn" type="button" value="2">
+                    <input class="btn" type="button" value="3">
+                    <input class="btn" type="button" value="+">
+                    <input class="btn" type="button" value="4">
+                    <input class="btn" type="button" value="5">
+                    <input class="btn" type="button" value="6">
+                    <input class="btn" type="button" value="-">
+                    <input class="btn" type="button" value="7">
+                    <input class="btn" type="button" value="8">
+                    <input class="btn" type="button" value="9">
+                    <input class="btn" type="button" value="=">
+                </div>
+                <script>
+                    const btn = document.getElementsByClassName("btn");
+                    const inputBox = document.getElementById("inputBox");
+                    let allValues = '';
+                    inputBox.value = allValues;
+
+                    const calculator = () => {
+                        Array.from(btn).forEach(button => {
+                            button.addEventListener("click", (e) => {
+                                btnValue = e.target.value;
+                                if (btnValue === 'AC') {
+                                    inputBox.value = '0';
+                                    allValues = '';
+                                } else if (btnValue === 'DEL') {
+                                    let value1 = allValues.length - 1;
+                                    allValues = allValues.slice(0, value1);
+                                    inputBox.value = allValues;
+                                } else if (btnValue === '=') {
+                                    let evaluatedValue = eval(allValues);
+                                    inputBox.value = evaluatedValue;
+                                    allValues = '';
+                                }
+                                else {
+                                    allValues += btnValue;
+                                    inputBox.value = allValues;
+                                };
+                            });
+                        });
+                    }
+                    calculator();
+                </script>
             </div>
         </div>
+        <div class="neck"></div>
+        <div class="stand"></div>
     </div>
-    <script>
-        const btn = document.getElementsByClassName("btn");
-        const inputBox = document.getElementById("inputBox");
-        let allValues = '';
-        inputBox.value = allValues;
-
-        const calculator = () => {
-            Array.from(btn).forEach(button => {
-                button.addEventListener("click", (e) => {
-                    btnValue = e.target.value;
-                    if (btnValue === 'AC') {
-                        inputBox.value = '0';
-                        allValues = '';
-                    } else if (btnValue === 'DEL') {
-                        let value1 = allValues.length - 1;
-                        allValues = allValues.slice(0, value1);
-                        inputBox.value = allValues;
-                    } else if (btnValue === '=') {
-                        let evaluatedValue = eval(allValues);
-                        inputBox.value = evaluatedValue;
-                        allValues = '';
-                    }
-                    else {
-                        allValues += btnValue;
-                        inputBox.value = allValues;
-                    };
-                });
-            });
-        }
-        calculator();
-    </script>
 </body>
 
 </html>
