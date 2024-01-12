@@ -18,7 +18,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1.5vw solid black; */
 }
 
 .box {
@@ -94,7 +93,6 @@ body {
 }
 
 .calculatorBox {
-    /* background-color: red; */
     display: grid;
     width: 97%;
     align-items: center;
