@@ -101,6 +101,12 @@
         .rightMark {
             display: none;
         }
+        img{
+            cursor: pointer;
+        }
+        button{
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -121,76 +127,118 @@
         const addBtn = document.getElementById("addBtn");
         const deleteBtn = document.getElementById("deleteBtn");
         const taskList = document.getElementById("taskList");
+        let taskArray = [];
 
-        const addTask = () => {
+
+        window.onload = () => {
+            if (localStorage.getItem('alltask') == null) {
+                console.log('Local storage is empty.');
+            } else {
+                let savedtask = localStorage.getItem('alltask');
+                let savedtaskarray = JSON.parse(savedtask);
+                for (const localStorageTask of savedtaskarray) {
+                    addTask(localStorageTask);
+                    taskArray.push(localStorageTask);
+                };
+            };
+        };
+        function addtaskInLocalStorage() {
+            let data = inputBox.value;
+            taskArray.push(data);
+            localStorage.setItem('alltask', JSON.stringify(taskArray));
+            inputBox.value = '';
+        };
+
+        const addTask = (data) => {
+            // Main box of tasks.
+            const taskListBox = document.createElement('div');
+            taskListBox.className = 'taskListBox'
+            taskList.appendChild(taskListBox);
+
+            // Mark box.
+            const mark = document.createElement('div');
+            mark.className = 'mark'
+            taskListBox.appendChild(mark);
+
+            // question tick
+            const questionMark = new Image();
+            questionMark.src = 'question.png';
+            questionMark.className = 'questionMark'
+            mark.appendChild(questionMark)
+            questionMark.width = 40
+
+            // Right tick
+            const rightMark = new Image();
+            rightMark.src = 'check.png';
+            rightMark.className = 'rightMark'
+            mark.appendChild(rightMark)
+            rightMark.width = 40
+
+            // Click and mark.
+            rightMark.addEventListener('click', () => {
+                questionMark.style.display = 'block';
+                rightMark.style.display = 'none';
+            });
+            questionMark.addEventListener('click', () => {
+                questionMark.style.display = 'none';
+                rightMark.style.display = 'block';
+            });
+
+            // task data box.
+            inputBox.style.border = '2px solid white'
+            const task = document.createElement('div');
+            task.className = 'taskList'
+            task.innerHTML = data;
+            taskListBox.appendChild(task);
+
+            var deleteTask = new Image();
+            deleteTask.src = "cancel.png";
+            deleteTask.className = 'deletetaskbtn'
+            task.appendChild(deleteTask);
+            deleteTask.width = 30
+            deleteTask.addEventListener('click', (e) => {
+                let halfParent = e.target.parentElement;
+                let halfParentText = e.target.parentElement.innerText;
+                deleteTaskInLocalStorage(halfParentText);
+                halfParent.style.display = 'none';
+                let fullParent = halfParent.parentElement;
+                fullParent.remove();
+            });
+        }
+        function deleteTaskInLocalStorage(taskText) {
+            let localStorageArray = JSON.parse(localStorage.getItem('alltask'));
+            let searchText = taskText;
+            let index = localStorageArray.indexOf(searchText);
+            console.log(index);
+
+            if (index !== -1) {
+                localStorageArray.splice(index, 1);
+                localStorage.setItem('alltask', JSON.stringify(localStorageArray));
+            }
+        }
+        addBtn.addEventListener('click', () => {
             if (inputBox.value == '') {
                 inputBox.style.border = '2px solid #AE1111'
             } else {
-                // Main box of tasks.
-                const taskListBox = document.createElement('div');
-                taskListBox.className = 'taskListBox'
-                taskList.appendChild(taskListBox);
-
-                // Mark box.
-                const mark = document.createElement('div');
-                mark.className = 'mark'
-                taskListBox.appendChild(mark);
-
-                // question tick
-                const questionMark = new Image();
-                questionMark.src = 'question.png';
-                questionMark.className = 'questionMark'
-                mark.appendChild(questionMark)
-                questionMark.width = 40
-
-                // Right tick
-                const rightMark = new Image();
-                rightMark.src = 'check.png';
-                rightMark.className = 'rightMark'
-                mark.appendChild(rightMark)
-                rightMark.width = 40
-
-                // Click and mark.
-                rightMark.addEventListener('click', () => {
-                    questionMark.style.display = 'block';
-                    rightMark.style.display = 'none';
-                });
-                questionMark.addEventListener('click', () => {
-                    questionMark.style.display = 'none';
-                    rightMark.style.display = 'block';
-                });
-
-                // task data box.
-                inputBox.style.border = '2px solid white'
                 let data = inputBox.value;
-                const task = document.createElement('div');
-                task.className = 'taskList'
-                task.innerHTML = data;
-                taskListBox.appendChild(task);
-
-                var deleteTask = new Image();
-                deleteTask.src = "cancel.png";
-                task.appendChild(deleteTask);
-                deleteTask.width = 30
-                deleteTask.addEventListener('click', (e) => {
-                    const halfParent = e.target.parentElement;
-                    halfParent.style.display = 'none';
-                    let fullParent = halfParent.parentElement;
-                    fullParent.remove();
-                });
-
-                // clear input box.
-                inputBox.value = '';
+                addTask(data);
+                addtaskInLocalStorage();
             }
-        }
-        addBtn.addEventListener('click', addTask);
+        });
         inputBox.addEventListener('keypress', (target) => {
-            if (target.key == 'Enter') {
-                addTask()
+            if (inputBox.value == '') {
+                inputBox.style.border = '2px solid #AE1111'
+            } else {
+                if (target.key == 'Enter') {
+                    let data = inputBox.value;
+                    addTask(data);
+                    addtaskInLocalStorage();
+                }
             }
         });
         deleteBtn.addEventListener('click', () => {
             taskList.innerText = "";
+            localStorage.clear();
         })
     </script>
 </body>
